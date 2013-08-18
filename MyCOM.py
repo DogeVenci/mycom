@@ -26,7 +26,8 @@ class MainWidget(QtGui.QWidget):
         self.ui.sendButton.clicked.connect(self.__onSendData)        
         self.ui.resetArduinoButton.clicked.connect(self.__onResetArduino)        
         self.ui.clearHistoryButton.clicked.connect(self.ui.clearHistory)        
-        self.ui.clearLcdButton.clicked.connect(self.ui.clearLcdNumber)        
+        self.ui.clearLcdButton.clicked.connect(self.ui.clearLcdNumber)
+        self.ui.filterRegex.textChanged.connect(self.ui.onFilterChanged)     
 
     def __openPort(self, settings=None):
         if not settings:

@@ -7,6 +7,7 @@ import Util
 
 class MyCOM_UiHandler(MyCOM_UIForm):
     def __init__(self, parent=None):
+        self.filterData=".*"
         MyCOM_UIForm.__init__(self)
     
     def setupWidget(self, wobj):
@@ -57,7 +58,13 @@ class MyCOM_UiHandler(MyCOM_UIForm):
         if not self.radioButton.isChecked():
             data = Util.toVisualHex(data)
         else:
-            data = data.replace('\n', '<br/>')
+            try:
+                data = filterData(data,self.filterData)
+            except Exception, e:
+                print "error regex!"
+           
+            if data:
+                data = data.replace('\n', '<br/>')
         self.chatTextBrowser.append('<b>Recv</b> @%s<br/><font color="yellow">%s</font><br/><br/>'
                                     % (ctime(), data))
         self.recvLcdNumber.display(self.recvLcdNumber.intValue() + bytes)
@@ -68,3 +75,11 @@ class MyCOM_UiHandler(MyCOM_UIForm):
     
     def clearHistory(self):
         self.chatTextBrowser.clear()
+
+    def onFilterChanged(self):
+        self.filterData=self.filterRegex.displayText().toUtf8().data()
+        if self.filterData=='':
+            self.filterData='.*'
+            self.filterRegex.setText(self.filterData)
+        print self.filterData
+
