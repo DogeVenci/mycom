@@ -47,7 +47,7 @@ def configSave(jsondata):
             #configData=json.dumps([{"list":"1","2":"2"}],indent=4)
             #jsonFile.write(str(configData))
             #f = tempfile.NamedTemporaryFile(mode='w+')
-            json.dump({"list":"1","2":"2"},jsonFile,indent=4)
+            json.dump(jsondata,jsonFile,indent=4)
             #f.flush()
             #print open(f.name,"r").read()
         except Exception, e:
@@ -62,11 +62,12 @@ def configRead():
         try:
             configData=json.loads(data)
             print configData
+            return configData
         except Exception, e:
-            raise
+            print 'Config file no found,create default'
+            configSave({"list":"1","2":"2"})
         finally:
             jsonFile.close()
-            configSave("1")
 
 
 toVisualHex = lambda data: ' '.join([hexlify(c) for c in data]).upper()

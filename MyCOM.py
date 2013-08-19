@@ -15,6 +15,8 @@ class MainWidget(QtGui.QWidget):
         self.ui.setupUi(self)
         self.ui.setupWidget(self)
         self.__setupSignal()
+        for iCombo in range(self.ui.setComboBox.count()):
+            print self.ui.setComboBox.itemText(iCombo)
     
     def closeEvent(self, e):
         if self.flags["__isopen__"]:

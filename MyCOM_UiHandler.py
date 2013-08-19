@@ -59,12 +59,13 @@ class MyCOM_UiHandler(MyCOM_UIForm):
             data = Util.toVisualHex(data)
         else:
             try:
-                data = filterData(data,self.filterData)
+                data = Util.filterData(data,self.filterData)
             except Exception, e:
-                print "error regex!"
+                print "Error filterData!",self.filterData,e
            
-            if data:
-                data = data.replace('\n', '<br/>')
+            if not data:
+                return
+            data = data.replace('\n', '<br/>')
         self.chatTextBrowser.append('<b>Recv</b> @%s<br/><font color="yellow">%s</font><br/><br/>'
                                     % (ctime(), data))
         self.recvLcdNumber.display(self.recvLcdNumber.intValue() + bytes)
