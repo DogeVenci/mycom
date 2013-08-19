@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 from binascii import hexlify, unhexlify
-
+import re
+import json
+import tempfile
 def formatPortSettins(settings):
     assert type(settings) is dict
     try:
@@ -29,5 +31,47 @@ def checkData(data, _type):
                     
     return not errch, msg
 
+def filterData(data,regex):
+    if data == '':
+        return ''
+    try:
+        re_filter=re.compile(regex,re.DOTALL)
+        if re_filter.search(data):
+            return data
+    except Exception, e:
+        raise
+
+def configSave(jsondata):
+    with open('config.json','w+') as jsonFile:
+        try:
+            #configData=json.dumps([{"list":"1","2":"2"}],indent=4)
+            #jsonFile.write(str(configData))
+            #f = tempfile.NamedTemporaryFile(mode='w+')
+            json.dump({"list":"1","2":"2"},jsonFile,indent=4)
+            #f.flush()
+            #print open(f.name,"r").read()
+        except Exception, e:
+            raise
+        finally:
+            jsonFile.close()
+        
+
+def configRead():
+    with open('config.json','a+') as jsonFile:
+        data=jsonFile.read()
+        try:
+            configData=json.loads(data)
+            print configData
+        except Exception, e:
+            raise
+        finally:
+            jsonFile.close()
+            configSave("1")
+
+
 toVisualHex = lambda data: ' '.join([hexlify(c) for c in data]).upper()
 toHex = lambda data: ''.join([unhexlify(data[i:i+2]) for i in xrange(0, len(data), 2)])
+
+if __name__=="__main__":
+    configRead()
+    #configSave("1")
