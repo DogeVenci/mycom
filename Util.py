@@ -44,14 +44,9 @@ def filterData(data,regex):
 def configSave(jsondata):
     with open('config.json','w+') as jsonFile:
         try:
-            #configData=json.dumps([{"list":"1","2":"2"}],indent=4)
-            #jsonFile.write(str(configData))
-            #f = tempfile.NamedTemporaryFile(mode='w+')
             json.dump(jsondata,jsonFile,indent=4)
-            #f.flush()
-            #print open(f.name,"r").read()
         except Exception, e:
-            raise
+            print 'Config file save failed.'
         finally:
             jsonFile.close()
         
@@ -61,11 +56,12 @@ def configRead():
         data=jsonFile.read()
         try:
             configData=json.loads(data)
-            print configData
             return configData
         except Exception, e:
-            print 'Config file no found,create default'
-            configSave({"list":"1","2":"2"})
+            print 'Config file no found,create default.'
+            defaultConfig={"curIndex":0,"ComboBoxList":["COM1:115200:8:N:1"]}
+            configSave(defaultConfig)
+            return defaultConfig
         finally:
             jsonFile.close()
 

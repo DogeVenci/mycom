@@ -15,9 +15,13 @@ class MainWidget(QtGui.QWidget):
         self.ui.setupUi(self)
         self.ui.setupWidget(self)
         self.__setupSignal()
-        for iCombo in range(self.ui.setComboBox.count()):
-            print self.ui.setComboBox.itemText(iCombo)
-    
+        config=Util.configRead()
+        try:
+            self.ui.setComboBox.addItems(config['ComboBoxList'])
+            self.ui.setComboBox.setCurrentIndex(config['curIndex'])
+        except Exception, e:
+            QtGui.QMessageBox.critical(self, "Error", '读取config.json错误') 
+        
     def closeEvent(self, e):
         if self.flags["__isopen__"]:
             self.serial.terminate()
@@ -55,7 +59,7 @@ class MainWidget(QtGui.QWidget):
     def __onOpenPort(self):
         if self.flags["__isopen__"]:
             return self.__closePort()
-            
+
         self.ui.onPortOpening()
         ret, msg = self.__openPort()
         if not ret:
@@ -64,6 +68,22 @@ class MainWidget(QtGui.QWidget):
             self.flags["__isopen__"] = True
             self.serial.start()
             self.ui.onPortOpened()
+
+        curText=self.ui.setComboBox.currentText()
+        curIndex=self.ui.setComboBox.currentIndex()
+            
+        if self.ui.setComboBox.findText(curText)==-1:    
+            self.ui.setComboBox.insertItem(0,curText)
+        
+        config={}
+        combolist=[]
+        for i in range(self.ui.setComboBox.count()):
+            combolist.append(str(self.ui.setComboBox.itemText(i)))
+        combolist=sorted(set(combolist),key=combolist.index)
+        config['ComboBoxList']=combolist
+        config['curIndex']=curIndex
+        Util.configSave(config)
+
     
     def __onSendData(self):
         if not self.flags["__isopen__"]:

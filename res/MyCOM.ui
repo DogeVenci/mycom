@@ -34,11 +34,6 @@
        <property name="editable">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string>COM3:9600:8:N:1</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

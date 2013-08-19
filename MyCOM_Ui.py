@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MyCOM.ui'
 #
-# Created: Sun Aug 18 15:47:47 2013
+# Created: Mon Aug 19 16:47:10 2013
 #      by: PyQt4 UI code generator 4.10.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -39,7 +39,6 @@ class Ui_Form(object):
         self.setComboBox = QtGui.QComboBox(Form)
         self.setComboBox.setEditable(True)
         self.setComboBox.setObjectName(_fromUtf8("setComboBox"))
-        self.setComboBox.addItem(_fromUtf8(""))
         self.horizontalLayout_3.addWidget(self.setComboBox)
         self.openButton = QtGui.QPushButton(Form)
         self.openButton.setMaximumSize(QtCore.QSize(75, 16777215))
@@ -134,7 +133,6 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(_translate("Form", "MyCOM", None))
         self.tipsLabel.setText(_translate("Form", "Welcome to MyCOM | Create by Apache", None))
-        self.setComboBox.setItemText(0, _translate("Form", "COM3:9600:8:N:1", None))
         self.openButton.setText(_translate("Form", "打开", None))
         self.label_2.setText(_translate("Form", "Recv", None))
         self.label_3.setText(_translate("Form", "Send", None))
